@@ -24,11 +24,11 @@ public class Principal {
 
         String endereco = "";
         if (tipoVeiculo.toLowerCase().contains("carr")) {
-            endereco = URL_BASE + "carros/marcas/";
+            endereco = URL_BASE + "carros/marcas";
         } else if (tipoVeiculo.toLowerCase().trim().contains("mot")) {
-            endereco = URL_BASE + "motos/marcas/";
+            endereco = URL_BASE + "motos/marcas";
         } else if (tipoVeiculo.toLowerCase().trim().contains("caminh")) {
-            endereco = URL_BASE + "caminhoes/marcas/";
+            endereco = URL_BASE + "caminhoes/marcas";
         } else {
             System.out.println("ERRO! Veiculo não existe");
             return;
@@ -49,7 +49,7 @@ public class Principal {
         int codigoMarca = sc.nextInt();
         sc.nextLine();
 
-        endereco = endereco + codigoMarca + "/modelos/";
+        endereco = endereco + "/" + codigoMarca + "/modelos";
         json = consumoApi.consumirApi(endereco);
 
         DadosModelo dadosModelos = conversor.obterDados(json, DadosModelo.class);
@@ -75,14 +75,14 @@ public class Principal {
         int codigoModelo = sc.nextInt();
         sc.nextLine();
 
-        endereco = endereco + codigoModelo + "/anos/";
+        endereco = endereco + "/" + codigoModelo + "/anos";
         json = consumoApi.consumirApi(endereco);
 
         DadosAno[] dadosAno = conversor.obterDados(json, DadosAno[].class);
 
         List<Veiculo> veiculos = new ArrayList<>();
         for (DadosAno ano : dadosAno) {
-            json = consumoApi.consumirApi(endereco + ano.codigo());
+            json = consumoApi.consumirApi(endereco + "/" + ano.codigo());
 
             DadosVeiculo dadosVeiculo = conversor.obterDados(json, DadosVeiculo.class);
             veiculos.add(new Veiculo(dadosVeiculo));
